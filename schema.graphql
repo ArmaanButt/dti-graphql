@@ -1,0 +1,99 @@
+type Query {
+  evalMetric(
+    type: String!
+    id: String
+    metric: Metric!
+    interval: Interval!
+    start: String!
+    end: String!
+  ): MetricResult
+  LineListRecord(filter: String): [LineListRecord]
+  OutbreakLocation(filter: String): [OutbreakLocation]
+  BiologicalAsset(filter: String): [BiologicalAsset]
+}
+
+type OutbreakLocation {
+  id: ID
+  name: String
+  fips: String
+  population2018: Int
+}
+
+type LineListRecord {
+  id: ID
+  location: String
+  locationType: String
+  isGroundZero: Boolean
+  livesInGroundZero: Boolean
+  traveledToGroundZero: Boolean
+  relevantTravelHistoryLocation: String
+  recordSource: String
+  gender: String
+  age: Int
+  ageRange: String
+  groundZeroExposure: String
+  chronicDisease: String
+  symptomStartDate: String
+  symptoms: String
+  caseConfirmationDate: String
+  hospitalAdmissionDate: String
+  relevantTravelHistoryDates: String
+  outcome: String
+  didDie: Boolean
+  didRecover: Boolean
+  outcomeDate: String
+  notes: String
+  lineListSource: String
+}
+
+type BiologicalAsset {
+  id: ID
+  assetType: String
+  genus: String
+  family: String
+  species: String
+  authors: String
+  genBankTitle: String
+  publications: String
+  name: String
+  location: String
+  host: String
+  isolationSource: String
+  collectionDate: String
+}
+
+type MetricResult {
+  type: String
+  count: Int
+  dates: String
+  start: String
+  end: String
+  data: [String]
+  missing: [Int]
+  interval: String
+  timeZone: String
+}
+
+enum Metric {
+  JHU_ConfirmedCases
+  JHU_ConfirmedDeaths
+  JHU_ConfirmedRecoveries
+  CovidTrackingProject_ConfirmedCases
+  CovidTrackingProject_ConfirmedDeaths
+  CovidTrackingProject_ConfirmedHospitalizations
+  CovidTrackingProject_NegativeTests
+  CovidTrackingProject_PendingTests
+  ECDC_ConfirmedCases
+  ECDC_ConfirmedDeaths
+  NYT_ConfirmedCases
+  NYT_ConfirmedDeaths
+  WHO_ConfirmedCases
+  WHO_ConfirmedDeaths
+}
+
+enum Interval {
+  HOUR
+  DAY
+  MONTH
+  YEAR
+}
