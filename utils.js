@@ -35,6 +35,7 @@ let evalMetric = async (_, { type, id, metric, interval, start, end }) => {
 };
 
 let c3Request = async (type, method, spec) => {
+  type = type.toLowerCase();
   const requestOptions = {
     method: "POST",
     headers: {

@@ -1,15 +1,23 @@
 type Query {
   evalMetric(
     type: String!
-    id: String
+    id: String!
     metric: Metric!
     interval: Interval!
     start: String!
     end: String!
   ): MetricResult
+  getArticleMetadata(biblioEntryId: String!): [ArticleMetaData]
   LineListRecord(filter: String): [LineListRecord]
   OutbreakLocation(filter: String): [OutbreakLocation]
   BiologicalAsset(filter: String): [BiologicalAsset]
+  Sequence(filter: String): [Sequence]
+  Subsequence(filter: String): [Subsequence]
+  AminoAcidLookup(filter: String): [AminoAcidLookup]
+  NucleotideLookup(filter: String): [NucleotideLookup]
+  BiblioEntry(filter: String): [BiblioEntry]
+  TherapeuticAsset(filter: String): [TherapeuticAsset]
+  ExternalLink(filter: String): [ExternalLink]
 }
 
 type OutbreakLocation {
@@ -62,16 +70,87 @@ type BiologicalAsset {
   collectionDate: String
 }
 
+type Sequence {
+  id: ID
+  sequence: String
+  sequenceType: String
+  length: Int
+}
+
+type Subsequence {
+  parent: Sequence
+  startIndex: Int
+  endIndex: Int
+}
+
+type AminoAcidLookup {
+  id: ID
+  name: String
+  abbreviation: String
+}
+
+type NucleotideLookup {
+  id: ID
+  name: String
+  abbreviation: String
+}
+
+type BiblioEntry {
+  id: String
+  sha: String
+  source: String
+  title: String
+  doi: String
+  pmcid: String
+  pubmedId: String
+  license: String
+  abstractText: String
+  publishTime: String
+  authors: String
+  journal: String
+  url: String
+  idMsftPaper: String
+  whoCovidence: String
+  hasFullText: Boolean
+  fullTextFile: String
+}
+
+type TherapeuticAsset {
+  id: ID
+  productType: String
+  description: String
+  clinicalTrialsOtherDiseases: String
+  developer: String
+  stageOfDevelopment: String
+  fundingSources: String
+  nextSteps: String
+  therapyType: String
+  origin: String
+  target: String
+}
+
+type ExternalLink {
+  id: ID
+  urlType: String
+  url: String
+  therapeuticAsset: String
+  origin: String
+}
+
 type MetricResult {
   type: String
   count: Int
-  dates: String
+  dates: [String]
   start: String
   end: String
   data: [String]
   missing: [Int]
   interval: String
   timeZone: String
+}
+
+type ArticleMetaData {
+  value: String
 }
 
 enum Metric {
